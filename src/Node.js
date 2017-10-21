@@ -35,7 +35,7 @@ class Node {
 
     /**
      * Guilds the voice node is currently connected to
-     * @type {Object}
+     * @type {Object.<string, Client>}
      */
     this.guilds = {}
 
@@ -55,7 +55,7 @@ class Node {
     this.master.client.on("self.voiceStateUpdate", this.onVoiceStateUpdate.bind(this))
     /**
      * The statistics of the OofClient
-     * @type {Object}
+     * @type {Object.<string, number>}
      * @property {number} cores Cores the oof server's host has
      * @property {number} load Load value of the oof server's host
      */

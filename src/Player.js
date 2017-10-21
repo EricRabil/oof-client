@@ -110,8 +110,8 @@ class Player extends EventEmitter {
 
   /**
    * Plays a given track
-   * @arg {Object} [track] Track to be played
-   * @arg {Object} [track.url] URL of the track to be played
+   * @arg {Object.<string, string>} [track] Track to be played
+   * @arg {String} [track.url] URL of the track to be played
    * @returns {Promise} Resolves once the track starts playing
    */
   play(track) {
