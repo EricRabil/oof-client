@@ -171,7 +171,7 @@ class Player extends EventEmitter {
    * @arg {Number} volume Volume to be changed to
    */
   volume(volume) {
-    return this.node.send("volume", {
+    return this.send("volume", {
       volume
     })
   }
@@ -181,7 +181,7 @@ class Player extends EventEmitter {
    * @arg {Boolean=} pause If set, only changes to the given state
    */
   pause(pause) {
-    return this.node.send("pause", {
+    return this.send("pause", {
       pause
     })
   }
