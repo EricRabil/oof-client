@@ -27,7 +27,7 @@ class OofClient {
     /**
      * The Discord Client this OofClient is for
      * 
-     * @type {Client}
+     * @type {Object.<string, Client>}
      */
     this.client = client
 
