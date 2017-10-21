@@ -1,4 +1,9 @@
-let Node = require("./Node")
+const Node = require("./Node")
+const REGION_MAP = {
+  us: [
+    "us", "brazil"
+  ]
+}
 
 /**
  * An Oof Client
@@ -7,19 +12,12 @@ let Node = require("./Node")
  * @param {Array[Node]} nodes Nodes the oof client connects to
  * @param {Client} client The Discord Client this Oof Client is for
  * @param {Object} guilds The players for each guild
- * @param {Object} regionMap the map of node region to guild region. In other words, the region of the node is used as the key and if a guild's region is contained within the array, it's eligible to be connected to for that guild
 */
 module.exports = class OofClient {
   constructor(client, nodes) {
-    this.nodes = []
+    this.nodes = nodes && nodes.map(n => new Nodes(n, this)) || []
     this.client = client
-    for(let node of nodes) {
-      this.nodes.push(new Node(node, this))
-    }
     this.guilds = {}
-    this.regionMap = {
-      us: ["us", "brazil"]
-    }
   }
 
   /**
@@ -41,7 +39,7 @@ module.exports = class OofClient {
   _findOptimalNode(region) {
     let nodes = this.nodes.map(node => node.connected)
     let regionalNodes = []
-    if(region) regionalNodes = this.nodes.filter(node => this.regionMap[node.region].includes(simplifyRegion(region)))
+    if(region) regionalNodes = this.nodes.filter(node => REGION_MAP[node.region].includes(simplifyRegion(region)))
     if(regionalNodes.length) nodes = regionalNodes
     nodes = nodes.sort((a, b) => (100 * (a.stats.load / a.stats.cores)) - (100 * (b.stats.load / b.stats.cores)))
     let node = nodes[0]
