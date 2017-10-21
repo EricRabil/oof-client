@@ -1,9 +1,13 @@
 const Websocket = require("ws")
 const Player = require("./Player")
 
-module.exports = class Node {
+/**
+ * Represents an oof voice node
+ * 
+ * @class Node
+ */
+class Node {
   /**
-    * Represents an oof voice node
     * @arg {Object} [opts] Node options
     * @arg {String="localhost"} [opts.address] Hostname to connect ot the oof server at
     * @arg {String="8081"} [opts.port] Port to connect to the oof server at
@@ -125,3 +129,5 @@ module.exports = class Node {
     return this.guilds[channel.guild.id]
   }
 }
+
+module.exports = Node;

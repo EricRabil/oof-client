@@ -7,16 +7,35 @@ const REGION_MAP = {
 
 /**
  * An Oof Client
- * @arg {Client} client The Discord Client instance this Oof Client is for
- * @arg {Array} nodes The Oof server nodes to connect to
- * @param {Array[Node]} nodes Nodes the oof client connects to
- * @param {Client} client The Discord Client this Oof Client is for
- * @param {Object} guilds The players for each guild
 */
-module.exports = class OofClient {
+class OofClient {
+  /**
+   * Creates an OofClient
+   * 
+   * @param {Client} client The Discord client this OofClient is for
+   * @param {Node[]} nodes Nodes the oof client connects to
+   * @memberof OofClient
+   */
   constructor(client, nodes) {
+    /**
+     * The nodes the oof client connects to
+     * 
+     * @type {Node[]}
+     */
     this.nodes = nodes && nodes.map(n => new Nodes(n, this)) || []
+
+    /**
+     * The Discord Client this OofClient is for
+     * 
+     * @type {Client}
+     */
     this.client = client
+
+    /**
+     * The players for each guild
+     * 
+     * @type {Guild}
+     */
     this.guilds = {}
   }
 

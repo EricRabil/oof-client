@@ -8,11 +8,8 @@ const EventEmitter = require("events").EventEmitter
  */
 class Player extends EventEmitter {
   /**
-   * @prop {VoiceChannel} channel The voice channel the player is playing to
-   * @prop {Guild} guild The guild the voice channel is in
-   * @prop {Node} node The node the player is broadcasting on
-   * @prop {Boolean} ready Whether or not the node is connected to the voice channel
-   * @prop {Object} nowPlaying The currently playing track's info
+   * @param {VoiceChannel} channel The voice channel the player is playing to
+   * @param {Node} node The node the player is broadcasting on
    */
   constructor(channel, node) { 
     super()
