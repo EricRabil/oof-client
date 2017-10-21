@@ -1,9 +1,13 @@
 const EventEmitter = require("events").EventEmitter
 
-module.exports = class Player extends EventEmitter {
+/**
+ * Represents a player system
+ * 
+ * @class Player
+ * @extends {EventEmitter}
+ */
+class Player extends EventEmitter {
   /**
-   * Represents a Player system
-   * @extends EventEmitter
    * @prop {VoiceChannel} channel The voice channel the player is playing to
    * @prop {Guild} guild The guild the voice channel is in
    * @prop {Node} node The node the player is broadcasting on
@@ -192,42 +196,44 @@ module.exports = class Player extends EventEmitter {
    */
   onMessage(message) {
     switch(message.op) {
-      case "connected": {
-        this.ready = true
-        /**
-         * Fires when the oof node connects to the voice channel
-         * @event Player#connected
-         */
-        this.emit("connected")
-        break
-      }
-      case "disconnected": {
-        this.ready = false
-        /**
-         * Fires when the oof node loses connection to the voice channel
-         * @event Player#disconnected
-         */
-        this.emit("disconnected")
-        break
-      }
-      case "trackInfo": { // Equivelent to saying the track is playing
-        this.nowPlaying = message.d.info
-        /**
-         * Fires when a track starts playing
-         * @event Player#playing
-         * @prop {Object} info The currently playing track
-         */
-        this.emit("playing", this.nowPlaying)
-        break
-      }
-      case "trackEnd": {
-        this.nowPlaying = null
-        /**
-         * Fires when a track ends
-         * @event Player#end
-         */
-        this.emit("end")
-      }
+    case "connected": {
+      this.ready = true
+      /**
+       * Fires when the oof node connects to the voice channel
+       * @event Player#connected
+       */
+      this.emit("connected")
+      break
+    }
+    case "disconnected": {
+      this.ready = false
+      /**
+       * Fires when the oof node loses connection to the voice channel
+       * @event Player#disconnected
+       */
+      this.emit("disconnected")
+      break
+    }
+    case "trackInfo": { // Equivelent to saying the track is playing
+      this.nowPlaying = message.d.info
+      /**
+       * Fires when a track starts playing
+       * @event Player#playing
+       * @prop {Object} info The currently playing track
+       */
+      this.emit("playing", this.nowPlaying)
+      break
+    }
+    case "trackEnd": {
+      this.nowPlaying = null
+      /**
+       * Fires when a track ends
+       * @event Player#end
+       */
+      this.emit("end")
+    }
     }
   }
 }
+
+module.export = Player;

@@ -101,14 +101,14 @@ module.exports = class Node {
       this.guilds[message.d.guildId].onMessage(message)
     } else {
       switch(message.op) {
-        case "sendWS": {
-          this.master.client.ws.send(message.d)
-          console.log("We need to send a WS!!!", message)
-          break
-        }
-        case "stats": {
-          this.stats = message.d
-        }
+      case "sendWS": {
+        this.master.client.ws.send(message.d)
+        console.log("We need to send a WS!!!", message)
+        break
+      }
+      case "stats": {
+        this.stats = message.d
+      }
       }
     }
   }
