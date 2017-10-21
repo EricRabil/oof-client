@@ -42,11 +42,17 @@ class OofClient {
   /**
    * Joins a voice channel
    * @arg {VoiceChannel} channel The voice channel to connect to
-   * @returns {Player} The player associated with the given voice channel
+   * @returns {Promise<Player>} Resolves with the player associated with the given voice channel
    */
-  join(channel) {
+  async join(channel) {
     let node = this._findOptimalNode(channel.guild.region)
-    return this.guilds[channel.guild.id] = node.createPlayer(channel)
+    this.guilds[channel.guild.id] = await node.createPlayer(channel)
+    this.guilds[channel.guild.id].once("disconnected", () => {
+      console.log("Node disconnect")
+      delete this.guilds[channel.guild.id]
+      this.guilds[channel.guild.id] = null
+    })
+    return this.guilds[channel.guild.id]
   }
 
   /**

@@ -31,12 +31,18 @@ class Player extends EventEmitter {
      * @type {boolean}
      */
     this.ready = false
-
+    
     /**
      * The currently playing track's info, or null when there is no currently playing track.
      * @type {Object | null}
      */
     this.nowPlaying = null;
+    
+    /**
+     * Whether or not this instance has been destroyed
+     * @type {boolean}
+     */
+    this.destroyed = false
   }
 
   /**
@@ -162,7 +168,10 @@ class Player extends EventEmitter {
   seek(position) {
     // Not implemented yet... D:
     return this.send("seek", {
-      position
+        position,
+        guildId: this.guild.id,
+        channelId: this.channel.id
+      }
     })
   }
 
@@ -172,7 +181,10 @@ class Player extends EventEmitter {
    */
   volume(volume) {
     return this.send("volume", {
-      volume
+        volume,
+        guildId: this.guild.id,
+        channelId: this.channel.id
+      }
     })
   }
 
@@ -182,8 +194,21 @@ class Player extends EventEmitter {
    */
   pause(pause) {
     return this.send("pause", {
-      pause
+        pause,
+        guildId: this.guild.id,
+        channelId: this.channel.id
+      }
     })
+  }
+
+  /**
+   * Destroys the Player object
+   */
+  destroy() {
+    for(let key of Object.keys(this)) {
+      delete this[key]
+    }
+    this.destroyed = true
   }
 
   /**

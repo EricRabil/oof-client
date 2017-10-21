@@ -103,6 +103,11 @@ class Node {
     console.log(`Got message from node ${data}`)
     if(message.d.guildId && message.d.channelId) {
       this.guilds[message.d.guildId].onMessage(message)
+      if(message.op == "disconnected") {
+        this.guilds[message.d.guildId].destroy()
+        delete this.guilds[message.d.guildId]
+        this.guilds[message.d.guildId] = null
+      }
     } else {
       switch(message.op) {
       case "sendWS": {
@@ -120,12 +125,12 @@ class Node {
   /**
   * Creates a new player and connects it to the voice channel
   * @arg {VoiceChannel} channel The VoiceChannel to create the player for
-  * @returns {Player} The Player for the give VoiceChannel
+  * @returns {Promise<Player>} Resolves with the Player for the give VoiceChannel
   */
-  createPlayer(channel) {
+  async createPlayer(channel) {
     this.guilds[channel.guild.id] = new Player(channel, this)
     this.guilds[channel.guild.id].once("disconnect", () => this.guilds[channel.guild.id] = null)
-    this.guilds[channel.guild.id].connect()
+    await this.guilds[channel.guild.id].connect()
     return this.guilds[channel.guild.id]
   }
 }
